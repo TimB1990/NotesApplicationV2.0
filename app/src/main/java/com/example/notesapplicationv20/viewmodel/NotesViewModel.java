@@ -44,5 +44,8 @@ public class NotesViewModel extends AndroidViewModel {
       mRepository.updateSingleNote(singleNote);
    }
 
-   // TODO getNoteById from mRepository
+   public LiveData<SingleNote> getNoteById(int id){
+      LiveData<SingleNote> singleNote = mRepository.getNoteById(id);
+      return singleNote;
+   }
 }

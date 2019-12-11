@@ -34,6 +34,11 @@ public class NoteRepository {
       return listedNotes;
    }
 
+   public LiveData<SingleNote> getNoteById(int id){
+      LiveData<SingleNote> singleNote = noteDao.getNoteById(id);
+      return singleNote;
+   }
+
    // You must call these on a non-UI thread or your app will throw an exception. Room ensures
    // that you're not doing any long running operations on the main thread, blocking the UI.
 
@@ -60,7 +65,5 @@ public class NoteRepository {
          noteDao.deleteMultipleNotes(notes);
       });
    }
-
-   //TODO getNoteById from dao
 
 }
