@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.View
       adapter = new NotesAdapter(getApplicationContext(),this);
       notesVm = new ViewModelProvider(this).get(NotesViewModel.class);
 
+      // here database is called to pass data in recycler view
       notesVm.getListedNotes().observe(this, new Observer<List<ListedNote>>(){
          @Override
          public void onChanged(List<ListedNote> listedNotes) {
@@ -69,7 +70,18 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.View
          toggleSelection(position);
       }
       else{
-         adapter.removeItem(position);
+         // adapter.removeItem(position);
+         Intent intent = new Intent(MainActivity.this, ReadNoteActivity.class);
+         List<ListedNote> listedNotes = adapter.getListedNotes();
+         ListedNote lNote = listedNotes.get(position);
+
+         int noteId = lNote.getId();
+         // String noteTitle = lNote.getTitle();
+
+         intent.putExtra("noteId", noteId);
+         //intent.putExtra("noteTitle", noteTitle);
+
+         startActivity(intent);
       }
    }
 

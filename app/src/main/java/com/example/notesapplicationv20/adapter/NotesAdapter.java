@@ -77,6 +77,11 @@ public class NotesAdapter extends SelectableAdapter<NotesAdapter.ViewHolder>{
       notifyDataSetChanged();
    }
 
+   // get listed notes
+   public List<ListedNote> getListedNotes(){
+      return this.mListedNotes;
+   }
+
    @Override
    public int getItemCount() {
       if (mListedNotes != null) {
