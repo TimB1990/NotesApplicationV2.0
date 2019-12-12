@@ -21,7 +21,7 @@ import com.example.notesapplicationv20.viewmodel.NotesViewModel;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
    private static final int NEW_NOTE_REQUEST_CODE = 1;
 
@@ -37,19 +37,6 @@ public class MainActivity extends AppCompatActivity {
       rvNotes = findViewById(R.id.notes_recycler_view);
 
       adapter = new NotesAdapter(this);
-      adapter.setOnItemClickListener(new NotesAdapter.ClickListener() {
-         @Override
-         public void onItemClick(int position, View v) {
-            String text = "onItemClick: " + position;
-            Toast.makeText(getApplicationContext(),text, Toast.LENGTH_SHORT).show();
-         }
-
-         @Override
-         public void onItemLongClick(int position, View v) {
-            String text = "onItemLongClick: " + position;
-            Toast.makeText(getApplication(), text, Toast.LENGTH_SHORT).show();
-         }
-      });
 
       notesVm = new ViewModelProvider(this).get(NotesViewModel.class);
       notesVm.getListedNotes().observe(this, new Observer<List<ListedNote>>(){

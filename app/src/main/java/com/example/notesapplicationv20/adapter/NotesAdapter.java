@@ -1,35 +1,29 @@
 package com.example.notesapplicationv20.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.core.app.TaskStackBuilder;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.notesapplicationv20.R;
 import com.example.notesapplicationv20.database.ListedNote;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
+public abstract class NotesAdapter extends SelectableAdapter<NotesAdapter.ViewHolder>{
 
-
-   private Context mContext;
-   private static ClickListener clickListener;
 
    private final LayoutInflater mInflater;
    private List<ListedNote> mListedNotes;
 
-   MyCallback myCallback;
-
-   public interface MyCallback{
-      void listenerMethod(String textViewValue);
-   }
-
    public NotesAdapter(Context context) {
-      this.mContext = context;
       mInflater = LayoutInflater.from(context);
    }
 
@@ -45,6 +39,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
       ListedNote lNote = mListedNotes.get(position);
+
       holder.id.setText(Integer.toString(lNote.getId()));
       holder.subject.setText(lNote.getSubject());
       holder.title.setText(lNote.getTitle());
@@ -70,7 +65,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
       }
    }
 
-   public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener  {
+   public class ViewHolder extends RecyclerView.ViewHolder{
 
       public TextView id, subject, title, description, createdAt, lastUpdate;
       public LinearLayout itemLayout;
@@ -79,9 +74,6 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
       public ViewHolder(View itemView) {
          super(itemView);
 
-         itemView.setOnClickListener(this);
-         itemView.setOnLongClickListener(this);
-
          itemLayout = itemView.findViewById(R.id.item_layout);
          id = itemView.findViewById(R.id.note_id);
          subject = itemView.findViewById(R.id.note_subject_text);
@@ -89,26 +81,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
          description = itemView.findViewById(R.id.note_description_text);
          createdAt = itemView.findViewById(R.id.note_created_text);
          lastUpdate = itemView.findViewById(R.id.note_updated_text);
+
       }
-
-      @Override
-      public void onClick(View v) {
-         clickListener.onItemClick(getAdapterPosition(), v);
-      }
-
-      @Override
-      public boolean onLongClick(View v) {
-         clickListener.onItemLongClick(getAdapterPosition(),v);
-         return true;
-      }
-   }
-
-   public void setOnItemClickListener(ClickListener clickListener){
-      NotesAdapter.clickListener = clickListener;
-   }
-
-   public interface ClickListener{
-      void onItemClick(int position, View v);
-      void onItemLongClick(int position, View v);
    }
 }
