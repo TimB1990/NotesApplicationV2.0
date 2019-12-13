@@ -54,6 +54,12 @@ public class NoteRepository {
       });
    }
 
+   public void deleteSingleNoteById(int id){
+      NoteDatabase.databaseWriteExecutor.execute(()->{
+         noteDao.deleteSingleNoteById(id);
+      });
+   }
+
    public void updateSingleNote(SingleNote note){
       NoteDatabase.databaseWriteExecutor.execute(()->{
          noteDao.updateSingleNote(note);

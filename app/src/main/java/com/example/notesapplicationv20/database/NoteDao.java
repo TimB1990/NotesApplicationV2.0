@@ -30,6 +30,9 @@ public interface NoteDao {
 
    @Query("select * from notes where id = :id")
    LiveData<SingleNote> getNoteById(int id);
+
+   @Query("delete from notes where id = :id")
+   void deleteSingleNoteById(int id);
 }
 
 /*

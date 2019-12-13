@@ -21,6 +21,7 @@ import com.example.notesapplicationv20.adapter.NotesAdapter;
 import com.example.notesapplicationv20.database.ListedNote;
 import com.example.notesapplicationv20.viewmodel.NotesViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NotesAdapter.ViewHolder.ClickListener{
@@ -137,8 +138,19 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.View
       public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
          switch(item.getItemId()){
             case R.id.menu_remove:
+               // delete multiple notes
+
+               // get selected items that contains list with Integers position
+               List<Integer> selectedItems = adapter.getSelectedItems();
+               // get listed notes
+               List<ListedNote> allNotesList = adapter.getListedNotes();
+
+               for(Integer selectedItemPosition : selectedItems){
+                  int id = allNotesList.get(selectedItemPosition).getId();
+                  notesVm.deleteSingleNoteById(id);
+               }
+
                adapter.removeItems(adapter.getSelectedItems());
-               // TODO actual remove from database implementation
                Log.d(TAG, "menu_remove");
                mode.finish();
                return true;
