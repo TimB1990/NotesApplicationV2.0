@@ -1,7 +1,7 @@
 package com.example.notesapplicationv20;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,24 +9,21 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.notesapplicationv20.adapter.NotesAdapter;
 import com.example.notesapplicationv20.database.ListedNote;
 import com.example.notesapplicationv20.viewmodel.NotesViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements NotesAdapter.ViewHolder.ClickListener{
+public class MainActivity extends AppCompatActivity implements NotesAdapter.ViewHolder.ClickListener {
 
    public static final int NEW_NOTE_REQUEST_CODE = 1;
-   // public static final int UPDATED_NOTE_REQUEST_CODE = 1;
-   private static final String TAG = MainActivity.class.getSimpleName();
 
    private RecyclerView rvNotes;
    private NotesAdapter adapter;
@@ -37,19 +34,15 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.View
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
+
       setContentView(R.layout.activity_main);
       actionModeCallback = new ActionModeCallback();
       rvNotes = findViewById(R.id.notes_recycler_view);
-      adapter = new NotesAdapter(getApplicationContext(),this);
+      adapter = new NotesAdapter(getApplicationContext(), this);
       notesVm = new ViewModelProvider(this).get(NotesViewModel.class);
 
       // here database is called to pass data in recycler view
-      notesVm.getListedNotes().observe(this, new Observer<List<ListedNote>>(){
-         @Override
-         public void onChanged(List<ListedNote> listedNotes) {
-            adapter.setListedNotes(listedNotes);
-         }
-      });
+      notesVm.getListedNotes().observe(this, listedNotes -> adapter.setListedNotes(listedNotes));
 
       rvNotes.setAdapter(adapter);
       rvNotes.setItemAnimator(new DefaultItemAnimator());
@@ -57,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.View
       //rvNotes.setLayoutManager(new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL));
 
       // create button logic
-      Button createButton = findViewById(R.id.create_note_button);
+      FloatingActionButton createButton = findViewById(R.id.create_note_button);
       createButton.setOnClickListener(view -> {
          Intent intent = new Intent(MainActivity.this, WriteNoteActivity.class);
          startActivityForResult(intent, NEW_NOTE_REQUEST_CODE);
@@ -66,10 +59,9 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.View
 
    @Override
    public void onItemClicked(int position) {
-      if(actionMode != null){
+      if (actionMode != null) {
          toggleSelection(position);
-      }
-      else{
+      } else {
          // adapter.removeItem(position);
          Intent intent = new Intent(MainActivity.this, ReadNoteActivity.class);
          List<ListedNote> listedNotes = adapter.getListedNotes();
@@ -87,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.View
 
    @Override
    public boolean onItemLongClicked(int position) {
-      if(actionMode == null){
+      if (actionMode == null) {
          actionMode = startActionMode(actionModeCallback);
       }
 
@@ -95,22 +87,21 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.View
       return true;
    }
 
-   private void toggleSelection(int position){
+   private void toggleSelection(int position) {
       adapter.toggleSelection(position);
       int count = adapter.getSelectedItemCount();
-      if(count == 0){
+      if (count == 0) {
          actionMode.finish();
-      }
-      else{
+      } else {
          actionMode.setTitle(String.valueOf(count));
          actionMode.invalidate();
       }
    }
 
-   public void onActivityResult(int requestCode, int resultCode, Intent data){
+   public void onActivityResult(int requestCode, int resultCode, Intent data) {
       super.onActivityResult(requestCode, resultCode, data);
 
-      if(requestCode == 1 && resultCode == RESULT_OK){
+      if (requestCode == 1 && resultCode == RESULT_OK) {
          Toast.makeText(getApplicationContext(),
                  data.getStringExtra(
                          WriteNoteActivity.EXTRA_REPLY
@@ -119,8 +110,9 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.View
       }
    }
 
-   private class ActionModeCallback implements ActionMode.Callback{
-      private final String TAG = ActionModeCallback.class.getSimpleName();
+
+   /* inner class--------------------------------------------*/
+   private class ActionModeCallback implements ActionMode.Callback {
 
       @Override
       public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -135,27 +127,26 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.View
 
       @Override
       public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-         switch(item.getItemId()){
-            case R.id.menu_remove:
-               // delete multiple notes
 
-               // get selected items that contains list with Integers position
-               List<Integer> selectedItems = adapter.getSelectedItems();
-               // get listed notes
-               List<ListedNote> allNotesList = adapter.getListedNotes();
-
-               for(Integer selectedItemPosition : selectedItems){
-                  int id = allNotesList.get(selectedItemPosition).getId();
-                  notesVm.deleteSingleNoteById(id);
-               }
-
-               adapter.removeItems(adapter.getSelectedItems());
-               Log.d(TAG, "menu_remove");
+         if (item.getItemId() == R.id.menu_remove) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle(R.string.app_name);
+            builder.setMessage("Do you want to delete these ?");
+            builder.setIcon(R.drawable.ic_dialog_alert);
+            builder.setPositiveButton("Yes", (dialog, id) -> {
+               dialog.dismiss();
+               deleteSelectedListItems(adapter, notesVm);
                mode.finish();
-               return true;
-            default:
-               return false;
+            });
+            builder.setNegativeButton("No", (dialog, id) -> {
+               dialog.dismiss();
+               mode.finish();
+            });
+            AlertDialog alert = builder.create();
+            alert.show();
+            return true;
          }
+         return false;
       }
 
       @Override
@@ -163,5 +154,19 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.View
          adapter.clearSelection();
          actionMode = null;
       }
+
+      void deleteSelectedListItems(NotesAdapter adapter, NotesViewModel notesViewModel) {
+
+         List<Integer> selectedItems = adapter.getSelectedItems();
+         List<ListedNote> allNotesList = adapter.getListedNotes();
+
+         for (Integer selectedItemPosition : selectedItems) {
+            int id = allNotesList.get(selectedItemPosition).getId();
+            notesViewModel.deleteSingleNoteById(id);
+         }
+         adapter.removeItems(adapter.getSelectedItems());
+      }
    }
 }
+
+

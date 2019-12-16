@@ -45,6 +45,9 @@ dependencies {
     // Testing
     androidTestImplementation "androidx.arch.core:core-testing:$rootProject.coreTestingVersion"
 
+    // jdreffered
+    implementation 'org.jdeferred.v2:jdeferred-core:2.0.0'
+
     // ButterKnife
     implementation 'com.jakewharton:butterknife:10.0.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'

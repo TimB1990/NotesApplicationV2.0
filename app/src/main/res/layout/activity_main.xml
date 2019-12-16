@@ -7,21 +7,9 @@
     android:background="#FFECB3"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/create_note_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:text="Create New Note"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notes_recycler_view"
-        android:layout_width="0dp"
+        android:layout_width="336dp"
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
@@ -29,8 +17,23 @@
         android:layout_marginBottom="24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.461"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/create_note_button"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/note_item" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/create_note_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:backgroundTint="#FFE57F"
+        android:clickable="true"
+        android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:maxImageSize="56dp"
+        app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
