@@ -1,5 +1,6 @@
 package com.example.notesapplicationv20.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
@@ -8,14 +9,16 @@ import androidx.room.TypeConverters;
 
 import com.example.notesapplicationv20.util.DateConverter;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(tableName = "notes")
 @TypeConverters({DateConverter.class})
-public class ListedNote {
+public class ListedNote implements Serializable {
 
    // variables
    @PrimaryKey(autoGenerate = true)
+   @NonNull
    private int id;
 
    @ColumnInfo(name="subject")
@@ -35,10 +38,6 @@ public class ListedNote {
 
    @Ignore
    private boolean selected;
-
-   public ListedNote(){
-      //empty
-   }
 
    //methods
    public int getId() {

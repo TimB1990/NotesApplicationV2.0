@@ -48,12 +48,6 @@ public class NoteRepository {
       });
    }
 
-   public void deleteSingleNote(SingleNote note){
-      NoteDatabase.databaseWriteExecutor.execute(()->{
-         noteDao.deleteSingleNote(note);
-      });
-   }
-
    public void deleteSingleNoteById(int id){
       NoteDatabase.databaseWriteExecutor.execute(()->{
          noteDao.deleteSingleNoteById(id);
@@ -63,12 +57,6 @@ public class NoteRepository {
    public void updateSingleNote(SingleNote note){
       NoteDatabase.databaseWriteExecutor.execute(()->{
          noteDao.updateSingleNote(note);
-      });
-   }
-
-   public void deleteMultipleNotes(List<SingleNote> notes){
-      NoteDatabase.databaseWriteExecutor.execute(()->{
-         noteDao.deleteMultipleNotes(notes);
       });
    }
 

@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,12 +20,12 @@ import com.example.notesapplicationv20.adapter.NotesAdapter;
 import com.example.notesapplicationv20.database.ListedNote;
 import com.example.notesapplicationv20.viewmodel.NotesViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements NotesAdapter.ViewHolder.ClickListener{
 
-   private static final int NEW_NOTE_REQUEST_CODE = 1;
+   public static final int NEW_NOTE_REQUEST_CODE = 1;
+   // public static final int UPDATED_NOTE_REQUEST_CODE = 1;
    private static final String TAG = MainActivity.class.getSimpleName();
 
    private RecyclerView rvNotes;
@@ -111,7 +110,7 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.View
    public void onActivityResult(int requestCode, int resultCode, Intent data){
       super.onActivityResult(requestCode, resultCode, data);
 
-      if(requestCode == NEW_NOTE_REQUEST_CODE && resultCode == RESULT_OK){
+      if(requestCode == 1 && resultCode == RESULT_OK){
          Toast.makeText(getApplicationContext(),
                  data.getStringExtra(
                          WriteNoteActivity.EXTRA_REPLY

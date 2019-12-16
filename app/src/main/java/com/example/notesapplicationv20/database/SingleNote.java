@@ -1,21 +1,23 @@
 package com.example.notesapplicationv20.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.example.notesapplicationv20.util.DateConverter;
 
+import java.io.Serializable;
 import java.util.Date;
 
 @Entity(tableName = "notes")
 @TypeConverters({DateConverter.class})
-public class SingleNote {
-
-   // variables
+public class SingleNote implements Serializable {
 
    @PrimaryKey(autoGenerate = true)
+   @NonNull
    private int id;
 
    @ColumnInfo(name="subject")
@@ -36,6 +38,17 @@ public class SingleNote {
    @ColumnInfo(name="last_update")
    private Date lastUpdate;
 
+   public SingleNote(int id, String subject, String title, String description, String content, Date createdAt, Date lastUpdate){
+      this.id = id;
+      this.subject = subject;
+      this.title = title;
+      this.description = description;
+      this.content = content;
+      this.createdAt = createdAt;
+      this.lastUpdate = lastUpdate;
+   }
+
+   @Ignore
    public SingleNote(String subject, String title, String description, String content, Date createdAt, Date lastUpdate){
       this.subject = subject;
       this.title = title;

@@ -33,14 +33,9 @@ public class NotesViewModel extends AndroidViewModel {
       mRepository.insertSingleNote(singleNote);
    }
 
-
    public void deleteSingleNoteById(int id){
       mRepository.deleteSingleNoteById(id);
    }
-
-   /*public void deleteMultipleNotes(List<SingleNote> notes){
-      mRepository.deleteMultipleNotes(notes);
-   }*/
 
    public void updateSingleNote(SingleNote singleNote){
       mRepository.updateSingleNote(singleNote);

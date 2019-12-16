@@ -8,12 +8,29 @@
     android:orientation="vertical"
     tools:context=".ReadNoteActivity">
 
+    <ImageButton
+        android:id="@+id/read_note_edit_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:elevation="2dp"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         android:padding="10dp">
+
+        <TextView
+            android:id="@+id/read_item_subject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="subject"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/read_item_title"
@@ -37,7 +54,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginBottom="10dp"
         android:orientation="horizontal"
         android:padding="10dp">
@@ -46,8 +63,8 @@
             android:id="@+id/read_item_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="this is some content that is represented by lorem upsoum dolar reial ditra hlalt dashbarra..."
             android:textSize="18sp" />
+
     </LinearLayout>
 </LinearLayout>
