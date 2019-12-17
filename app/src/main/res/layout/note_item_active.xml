@@ -32,7 +32,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="subject"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -41,7 +40,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="example title"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -51,7 +49,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:inputType="number"
-                android:text="id"
                 android:textAlignment="textEnd"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -85,7 +82,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Created at:"
                 android:textStyle="bold" />
 
             <TextView
@@ -93,22 +89,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="08-12-2019 17:35" />
+                />
 
             <TextView
                 android:id="@+id/note_updated_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Last update:"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/note_updated_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="08-12-2019 17:40" />
+                android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
 

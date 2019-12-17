@@ -1,3 +1,27 @@
 <resources>
-    <string name="app_name">NotesApplicationV2.0</string>
+    <string name="app_name" translatable="false">NotesApplicationV2.0</string>
+
+    <!-- labels -->
+    <string name="create_note_subject_label">Select Subject</string>
+    <string name="create_note_title_label">Note Title:</string>
+    <string name="create_note_desc_label">Short description</string>
+
+    <!-- buttons text -->
+    <string name="create_note_submit">Save Note</string>
+    <string name="update_note_submit">Update Note</string>
+
+    <!-- note item -->
+    <string name="note_created_label">Created at</string>
+    <string name="note_updated_label">Last Update</string>
+
+    <!-- placeholders -->
+    <string name="ph_title">Give a Title</string>
+    <string name="ph_desc">Give a short description...</string>
+    <string name="ph_cont">Copy/paste or write content here...</string>
+    <string name="create_note_content_label">Content</string>
+
+    <!-- alert content-->
+    <string name="alert_delete_message">Are you sure you want to delete these notes?</string>
+    <string name="alert_yes_button">Yes</string>
+    <string name="alert_no_Button">No</string>
 </resources>

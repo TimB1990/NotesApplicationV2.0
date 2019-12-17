@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NotesApplicationV2.0</string>
+    <string name="create_note_desc_label">Korte omschrijving</string>
+    <string name="create_note_subject_label">Selecteer vak</string>
+    <string name="create_note_submit">Notitie Opslaan</string>
+    <string name="create_note_title_label">Titel</string>
+    <string name="note_created_label">Gemaakt op</string>
+    <string name="note_updated_label">Geupdate op</string>
+    <string name="ph_cont">Kopieer/plak of schrijf inhoud hier...</string>
+    <string name="ph_desc">Geef een korte omschrijving...</string>
+    <string name="ph_title">Geef een titel</string>
+    <string name="update_note_submit">Updaten notitie</string>
+    <string name="create_note_content_label">Inhoud</string>
+    <string name="alert_delete_message">" Weet je zeker dat je deze notities wilt verwijderen?"</string>
+    <string name="alert_no_Button">Nee</string>
+    <string name="alert_yes_button">Ja</string>
+</resources>

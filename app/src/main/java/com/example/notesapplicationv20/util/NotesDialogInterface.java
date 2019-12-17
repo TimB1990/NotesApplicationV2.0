@@ -1,6 +1,6 @@
 package com.example.notesapplicationv20.util;
 
-public class MyInterface {
+public class NotesDialogInterface {
 
    DialogReturn dialogReturn;
 

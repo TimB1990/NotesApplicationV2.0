@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:foreground="?android:attr/selectableItemBackground"
-    app:cardBackgroundColor="@color/item_standard"
-    app:cardCornerRadius="5dp"
+    app:cardBackgroundColor="#EEEECC"
     app:cardElevation="7dp"
     app:cardUseCompatPadding="true"
     app:contentPadding="2dp">
@@ -17,7 +17,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:background="@android:color/transparent"
         android:orientation="vertical">
 
 
@@ -33,18 +32,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="subject"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="subject" />
 
             <TextView
                 android:id="@+id/note_title_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="example title"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="title" />
 
             <TextView
                 android:id="@+id/note_id"
@@ -52,10 +51,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:inputType="number"
-                android:text="id"
                 android:textAlignment="textEnd"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="id" />
         </LinearLayout>
 
         <LinearLayout
@@ -70,7 +69,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="this is example description...."
                 android:textSize="18sp" />
         </LinearLayout>
 
@@ -86,30 +84,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Created at:"
+                android:text="@string/note_created_label"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/note_created_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="08-12-2019 17:35" />
+                android:layout_weight="1" />
 
             <TextView
                 android:id="@+id/note_updated_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Last update:"
+                android:text="@string/note_updated_label"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/note_updated_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="08-12-2019 17:40" />
+                android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
 

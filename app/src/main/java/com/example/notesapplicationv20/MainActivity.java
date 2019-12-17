@@ -68,11 +68,7 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.View
          ListedNote lNote = listedNotes.get(position);
 
          int noteId = lNote.getId();
-         // String noteTitle = lNote.getTitle();
-
          intent.putExtra("noteId", noteId);
-         //intent.putExtra("noteTitle", noteTitle);
-
          startActivity(intent);
       }
    }
@@ -110,7 +106,6 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.View
       }
    }
 
-
    /* inner class--------------------------------------------*/
    private class ActionModeCallback implements ActionMode.Callback {
 
@@ -131,14 +126,14 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.View
          if (item.getItemId() == R.id.menu_remove) {
             AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
             builder.setTitle(R.string.app_name);
-            builder.setMessage("Do you want to delete these ?");
+            builder.setMessage(R.string.alert_delete_message);
             builder.setIcon(R.drawable.ic_dialog_alert);
-            builder.setPositiveButton("Yes", (dialog, id) -> {
+            builder.setPositiveButton(R.string.alert_yes_button, (dialog, id) -> {
                dialog.dismiss();
                deleteSelectedListItems(adapter, notesVm);
                mode.finish();
             });
-            builder.setNegativeButton("No", (dialog, id) -> {
+            builder.setNegativeButton(R.string.alert_no_Button, (dialog, id) -> {
                dialog.dismiss();
                mode.finish();
             });
