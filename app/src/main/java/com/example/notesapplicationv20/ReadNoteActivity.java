@@ -16,7 +16,8 @@ import com.example.notesapplicationv20.viewmodel.NotesViewModel;
 
 public class ReadNoteActivity extends AppCompatActivity {
 
-   // private static final int UPDATED_NOTE_CODE = 1;
+   public static final int UPDATED_NOTE_CODE = 1;
+
    private NotesViewModel model;
    TextView readItemSubject, readItemTitle, readItemId, readItemContent;
    SingleNote singleNote;
@@ -27,20 +28,21 @@ public class ReadNoteActivity extends AppCompatActivity {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_read_note);
 
-      // get intent data passed by main activity
+      /* Get intent data passed by main activity */
       Intent intent = getIntent();
       int noteId = intent.getIntExtra("noteId",0);
 
-      // define TextViews
+      /* Define text views */
       readItemSubject = findViewById(R.id.read_item_subject);
       readItemTitle = findViewById(R.id.read_item_title);
       readItemId = findViewById(R.id.read_item_id);
       readItemContent = findViewById(R.id.read_item_content);
       editButton = findViewById(R.id.read_note_edit_btn);
 
-      // initialize viewModel
+      /* Initialize viewModel */
       model = new ViewModelProvider(this).get(NotesViewModel.class);
 
+      /**/
       final Observer<SingleNote> singleNoteObserver = new Observer<SingleNote>(){
          @Override
          public void onChanged(SingleNote singleNote) {
@@ -56,17 +58,15 @@ public class ReadNoteActivity extends AppCompatActivity {
 
       model.getNoteById(noteId).observe(this, singleNoteObserver);
 
-      editButton.setOnClickListener(new View.OnClickListener(){
-         @Override
-         public void onClick(View v) {
-            Intent intent = new Intent(ReadNoteActivity.this, UpdateNoteActivity.class);
-            intent.putExtra("singleNote", singleNote);
-            startActivity(intent);
-         }
+      editButton.setOnClickListener(v -> {
+         Intent intent1 = new Intent(ReadNoteActivity.this, UpdateNoteActivity.class);
+         /* put serializable singleNote to be passed over to UpdateNoteActivity*/
+         intent1.putExtra("singleNote", singleNote);
+         startActivity(intent1);
       });
    }
 
-   /*public void onActivityResult(int requestCode, int resultCode, Intent data){
+   public void onActivityResult(int requestCode, int resultCode, Intent data){
       super.onActivityResult(requestCode, resultCode, data);
 
       if(requestCode == UPDATED_NOTE_CODE && resultCode == RESULT_OK){
@@ -76,7 +76,7 @@ public class ReadNoteActivity extends AppCompatActivity {
                  ),
                  Toast.LENGTH_SHORT).show();
       }
-   }*/
+   }
 
    private void setSingleNote(SingleNote singleNote){
       this.singleNote = singleNote;

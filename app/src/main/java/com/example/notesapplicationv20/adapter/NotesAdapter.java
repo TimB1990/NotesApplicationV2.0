@@ -15,16 +15,24 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+/** The NotesAdapter class extends SelectableAdapter that defines the logic to make
+ *  the items of an recyclerView selectable. The class itself defines the logic
+ *  for the recyclerView that is used to display listed notes.
+ *  */
 public class NotesAdapter extends SelectableAdapter<NotesAdapter.ViewHolder>{
 
+   /* Create instance of Context */
    private Context context;
 
+   /* Create instance of ViewHolder.ClickListener */
    private ViewHolder.ClickListener cl;
 
+   /* Define the layoutInflater and the List-object containing all listed notes */
    private final LayoutInflater mInflater;
    private List<ListedNote> mListedNotes;
 
 
+   /* Initialize context and ViewHolder.ClickListener in constructor */
    public NotesAdapter(Context context, ViewHolder.ClickListener cl) {
       super();
       this.cl = cl;
@@ -36,8 +44,10 @@ public class NotesAdapter extends SelectableAdapter<NotesAdapter.ViewHolder>{
    @Override
    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-      // final int layout = viewType == TYPE_INACTIVE ? R.layout.note_item : R.layout.note_item_active;
-
+      /* Create the itemView that will hold the layoutInflater from context
+      *  Take R.layout.note_item(.xml) as single item that holds information about
+      *  the specific note that will be displayed in the viewHolder. attachToRoot is false
+      *  because we are not responsible for adding the child view manually (item) */
       View itemView = mInflater.inflate(R.layout.note_item, parent, false);
       return new ViewHolder(itemView, cl);
    }
@@ -45,8 +55,10 @@ public class NotesAdapter extends SelectableAdapter<NotesAdapter.ViewHolder>{
    @Override
    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+      /* get listed note from list by parsing position */
       final ListedNote lNote = mListedNotes.get(position);
 
+      /* set the content of the views defined in the ViewHolder subclass */
       holder.id.setText(Integer.toString(lNote.getId()));
       holder.subject.setText(lNote.getSubject());
       holder.title.setText(lNote.getTitle());
@@ -55,33 +67,41 @@ public class NotesAdapter extends SelectableAdapter<NotesAdapter.ViewHolder>{
       holder.createdAt.setText(sdf.format(lNote.getCreatedAt()));
       holder.lastUpdate.setText(sdf.format(lNote.getLastUpdate()));
 
-      // span the item if active, final can only be assigned once
-      final ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
-      if(lp instanceof StaggeredGridLayoutManager.LayoutParams){
-         StaggeredGridLayoutManager.LayoutParams sglp = (StaggeredGridLayoutManager.LayoutParams) lp;
-         sglp.setFullSpan(lNote.isSelected());
-         holder.itemView.setLayoutParams(sglp);
-      }
+      /* this code is to be used when using staggeredLayoutManager to align items properly */
 
-      // highlight the item if it is selected
-      // holder.itemLayout.setVisibility(isSelected(position) ? View.VISIBLE : View.INVISIBLE);
+//      final ViewGroup.LayoutParams lp = holder.itemView.getLayoutParams();
+//      if(lp instanceof StaggeredGridLayoutManager.LayoutParams){
+//         StaggeredGridLayoutManager.LayoutParams sglp = (StaggeredGridLayoutManager.LayoutParams) lp;
+//         sglp.setFullSpan(lNote.isSelected());
+//         holder.itemView.setLayoutParams(sglp);
+//      }
+
+      /* When the listed Note (cardView) is selected change its background color */
       holder.cardViewLayout.setBackgroundColor(
               isSelected(position) ? context.getResources().getColor(R.color.selected_overlay) :
                       context.getResources().getColor(R.color.item_standard)
       );
    }
 
-   // set listed notes
+   /** This method will set the listed notes inside this adapter and will notify
+    * the data set being changed
+    * @param newListedNotes A list containing the notes to be listed (ListedNote)
+    * */
    public void setListedNotes(List<ListedNote> newListedNotes) {
       this.mListedNotes = newListedNotes;
       notifyDataSetChanged();
    }
 
-   // get listed notes
+   /** This method will get all the notes that are listed
+    *  @return the list containing listed notes */
    public List<ListedNote> getListedNotes(){
       return this.mListedNotes;
    }
 
+   /** this method implements getItemCount() from RecyclerView.Adapter and returns
+    *  an Integer representing the item count
+    *  @return mListedNotes.size() if the list that contains notes is not null
+    *  otherwise 0 */
    @Override
    public int getItemCount() {
       if (mListedNotes != null) {
@@ -91,11 +111,17 @@ public class NotesAdapter extends SelectableAdapter<NotesAdapter.ViewHolder>{
       }
    }
 
+   /** This method removes a single item from the list containing notes and notifies when
+    *  an item is removed
+    *  @param position the note's position to be removed */
    public void removeItem(int position){
       mListedNotes.remove(position);
       notifyItemRemoved(position);
    }
 
+   /** This method handles the removal of multiple items
+    *  @param positions A list with integer positions of listed items
+    *  */
    public void removeItems(List<Integer> positions){
       Collections.sort(positions, new Comparator<Integer>(){
          @Override
@@ -104,7 +130,7 @@ public class NotesAdapter extends SelectableAdapter<NotesAdapter.ViewHolder>{
          }
       });
 
-      // split the list in ranges
+      /* split the list in ranges */
       while (!positions.isEmpty()) {
          if (positions.size() == 1) {
             removeItem(positions.get(0));
@@ -128,6 +154,9 @@ public class NotesAdapter extends SelectableAdapter<NotesAdapter.ViewHolder>{
       }
    }
 
+   /** This method removes a range of items
+    * @param positionStart The start position
+    * @param itemCount Amount of items being count */
    private void removeRange(int positionStart, int itemCount){
       for(int i = 0; i < itemCount; ++i){
          mListedNotes.remove(positionStart);
@@ -138,18 +167,29 @@ public class NotesAdapter extends SelectableAdapter<NotesAdapter.ViewHolder>{
 
 
 
+   /** This inner class contains the logic of a listed item inside the RecyclerView
+    *  Therefore this class extends RecyclerView.ViewHolder. This class implements
+    *  View.Onclicklistener and View.onLongClickListener so a single item can perform separate operations,
+    *  i.e. being selected on long click and launching the ReadNoteActivity on a single click.
+    *  @extends RecylerView.Viewholder
+    *  @implements View.OnclickListener
+    *  @implements View.OnLongClickListener */
    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
-      private static final String TAG = ViewHolder.class.getSimpleName();
+      /* Define the view elements for single item */
       TextView id, subject, title, description, createdAt, lastUpdate;
       View cardViewLayout;
 
-      // part of listener
+      /* Define the ClickListener */
       private ClickListener listener;
 
+      /** This constructor initializes the viewHolder of a single item
+       *  @param itemView The view that represents the entire viewHolder
+       *  @param listener The ClickListener that will be attached to this viewHolder*/
       public ViewHolder(View itemView, ClickListener listener) {
          super(itemView);
 
+         /* Initialize subviews of the ViewHolder's itemView */
          id = itemView.findViewById(R.id.note_id);
          subject = itemView.findViewById(R.id.note_subject_text);
          title = itemView.findViewById(R.id.note_title_text);
@@ -158,13 +198,19 @@ public class NotesAdapter extends SelectableAdapter<NotesAdapter.ViewHolder>{
          lastUpdate = itemView.findViewById(R.id.note_updated_text);
          cardViewLayout = itemView.findViewById(R.id.card_view_layout);
 
+         /* Initialize ClickListener listener */
          this.listener = listener;
 
+         /* Attach the onClickListeners to the viewHolder's itemView
+         *  the 'this' keywords refer to the implemented onClick() and onLongClick() methods */
          itemView.setOnClickListener(this);
          itemView.setOnLongClickListener(this);
       }
 
-      // logic for exposing listener passed to adapter
+      /** The onClick method checks if the listener is present, if so the listener calls its
+       *  onItemClicked method for the current layoutPosition of the item being clicked.
+       *  This method implements the View.OnClickListener interface,
+       *  listener is a reference to the ClickListener interface inside this class */
       @Override
       public void onClick(View v) {
          if(listener != null){
@@ -172,19 +218,22 @@ public class NotesAdapter extends SelectableAdapter<NotesAdapter.ViewHolder>{
          }
       }
 
+      /** The onLongClick method checks if the listener is present, if so the listener calls its
+       *  onLongItemClicked method for the current layoutPosition of the item being long clicked.
+       *  This method implements the View.OnLongClickListener interface,
+       *  listener is a reference to the ClickListener interface inside this class */
       @Override
       public boolean onLongClick(View v) {
          if(listener != null){
             return listener.onItemLongClicked(getLayoutPosition());
          }
-
          return true;
       }
 
+      /** This inner interface contains the methods that are implemented by MainActivity */
       public interface ClickListener{
          void onItemClicked(int position);
          boolean onItemLongClicked(int position);
       }
-
    }
 }

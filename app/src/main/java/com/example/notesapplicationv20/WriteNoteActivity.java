@@ -24,25 +24,35 @@ import java.util.TimeZone;
 
 public class WriteNoteActivity extends AppCompatActivity {
 
-   public static final String EXTRA_REPLY = "com.example.notesapplicationv20.REPLY";
+   /** set key-name of key: EXTRA_REPLY */
+   public static final String EXTRA_REPLY =
+           "com.example.notesapplicationv20.WriteNoteActivity.REPLY";
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
       setContentView(R.layout.activity_write_note);
 
-      NotesViewModel notesVm = new ViewModelProvider(this).get(NotesViewModel.class);
+      /* Define new viewModel by setting up a ViewModelProvider for this activity that references
+       *  the NotesViewModel class */
+      NotesViewModel model = new ViewModelProvider(this).get(NotesViewModel.class);
 
+      /** Define view elements for this activity */
       Spinner createNoteSubjectSpinner = findViewById(R.id.create_note_subject_spinner);
       EditText createNoteTitleInput = findViewById(R.id.create_note_title_input);
       EditText createNoteDescInput = findViewById(R.id.create_note_desc_input);
       EditText createNoteContentInput = findViewById(R.id.create_note_content_input);
 
-      final Button createNoteButton = findViewById(R.id.create_note_submit);
-      createNoteButton.setOnClickListener(view -> {
+      /** Define a submit note button and add an onclick listener */
+      final Button submitNoteButton = findViewById(R.id.create_note_submit);
+      submitNoteButton.setOnClickListener(view -> {
 
          // the retrieval of the text should be in this onclick listener because its value is empty
          // when the view is created
+
+         /** Fetching user input should be defined inside this onclick listener because their values are empty
+          *  when the view is created as long as the user hasn't provide them with input yet.
+          *  The text values will be set in an array */
 
          String[]values = new String[4];
          values[0] = createNoteSubjectSpinner.getSelectedItem().toString();
@@ -50,11 +60,21 @@ public class WriteNoteActivity extends AppCompatActivity {
          values[2] = createNoteDescInput.getText().toString();
          values[3] = createNoteContentInput.getText().toString();
 
+         /* Define a boolean with value: false that will be toggled to true when input validation succeeds */
          boolean go = false;
-         Intent replyIntent = new Intent();
+
+         /**Define a new intent*/
+         Intent intent = new Intent();
+
+         /** Loop over the array that contains all user input and check if given values are empty.
+          *  Otherwise toggle boolean go to true to continue */
          for(String value: values){
+
+            /** In case one or more values are empty call setResult and pass in RESULT_CANCELED (0) along
+             *  with the intent */
             if(value.isEmpty()){
-               setResult(RESULT_CANCELED, replyIntent);
+               setResult(RESULT_CANCELED, intent);
+               /** When the validation fails show a toast that says: "All fields are required" */
                Toast.makeText(getApplicationContext(),"All fields are required!", Toast.LENGTH_LONG).show();
                return;
             }
@@ -62,24 +82,30 @@ public class WriteNoteActivity extends AppCompatActivity {
                go = true;
             }
          }
+
+         /** If input validation succeeds create a new SingleNote object and call the viewModel's
+          *  insertSingleNote method and pass in single note */
          if(go){
 
-            // Calendar.getInstance().getTime()
-            Calendar calendar = new GregorianCalendar();
-            calendar.setTimeZone(TimeZone.getDefault());
-
+            /** To create an instance of SingleNote this code uses the
+             *  first constructor that does not require an id, because
+             *  the id will be generated automatically by Room database */
             SingleNote singleNote = new SingleNote(values[0],
                     values[1],
                     values[2],
                     values[3],
-                    calendar.getTime(),
-                    calendar.getTime()
+                    Calendar.getInstance().getTime(),
+                    Calendar.getInstance().getTime()
             );
 
-            notesVm.insertSingleNote(singleNote);
+            model.insertSingleNote(singleNote);
 
-            replyIntent.putExtra(EXTRA_REPLY, "note: " + values[1] + "was added!");
-            setResult(RESULT_OK, replyIntent);
+            /** After the note is being inserted call the intent.putExtra method and pass in
+             *  the key EXTRA_REPLY that contains a confirmation message as its value and call
+             *  setResult to confirm resultCode: RESULT_OK along with the intent that is to be called
+             *  by the onActivityResult method in MainActivity */
+            intent.putExtra(EXTRA_REPLY, "note: " + values[1] + "was added!");
+            setResult(RESULT_OK, intent);
 
          }
          finish();

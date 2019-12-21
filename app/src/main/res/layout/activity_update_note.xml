@@ -109,6 +109,6 @@
         android:layout_weight="0"
         android:background="@drawable/button"
         android:padding="10dp"
-        tools:text="Update Note" />
+        android:text="@string/update_note_submit" />
 
 </LinearLayout>
