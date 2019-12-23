@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#B2DFDB"
+    android:background="@color/update_activity_background"
     android:orientation="vertical"
     tools:context=".WriteNoteActivity">
 
@@ -16,7 +16,6 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/create_note_subject_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -25,7 +24,7 @@
             android:textStyle="bold" />
 
         <Spinner
-            android:id="@+id/create_note_subject_spinner"
+            android:id="@+id/update_note_subject_spinner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -41,7 +40,6 @@
         android:padding="10dp">
 
         <TextView
-            android:id="@+id/create_note_title_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -50,17 +48,17 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/create_note_title_input"
+            android:id="@+id/update_note_title_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/ph_title"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:autofillHints="" />
     </LinearLayout>
 
     <TextView
-        android:id="@+id/create_note_desc_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -71,7 +69,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/create_note_desc_input"
+        android:id="@+id/update_note_desc_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -82,7 +80,6 @@
         android:padding="10dp" />
 
     <TextView
-        android:id="@+id/create_note_content_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -92,7 +89,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/create_note_content_input"
+        android:id="@+id/update_note_cnt_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -104,7 +101,7 @@
         android:padding="10dp" />
 
     <Button
-        android:id="@+id/create_note_submit"
+        android:id="@+id/update_note_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -112,6 +109,6 @@
         android:layout_weight="0"
         android:background="@drawable/button"
         android:padding="10dp"
-        android:text="@string/create_note_submit" />
+        android:text="@string/update_note_submit" />
 
 </LinearLayout>

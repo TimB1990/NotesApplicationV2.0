@@ -3,7 +3,13 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="metallic_blue">#1E7097</color>
 
-    <color name="selected_overlay">#3E1BD8</color>
-    <color name="standard_item_color">#FFCCBC</color>
+    <color name="write_activity_background">#B2DFDB</color>
+    <color name="read_activity_background">#B2DFDB</color>
+    <color name="main_activity_background">#B2DFDB</color>
+    <color name="update_activity_background">#B2DFDB</color>
+
+    <color name="item_standard">#EEEECC</color>
+    <color name="selected_overlay">#1E7097</color>
 </resources>

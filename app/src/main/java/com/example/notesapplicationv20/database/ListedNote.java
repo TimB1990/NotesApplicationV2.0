@@ -1,21 +1,26 @@
 package com.example.notesapplicationv20.database;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 
 import com.example.notesapplicationv20.util.DateConverter;
 
+import java.io.Serializable;
 import java.util.Date;
 
+/** The ListedNote class implements Serializable and is equivalent to SingleNote except
+ *  for the note's content that is only shown when a specific singleNote is to be called.
+ *  */
 @Entity(tableName = "notes")
 @TypeConverters({DateConverter.class})
-public class ListedNote {
+public class ListedNote implements Serializable {
 
    // variables
    @PrimaryKey(autoGenerate = true)
+   @NonNull
    private int id;
 
    @ColumnInfo(name="subject")
@@ -32,13 +37,6 @@ public class ListedNote {
 
    @ColumnInfo(name="last_update")
    private Date lastUpdate;
-
-   @Ignore
-   private boolean selected;
-
-   public ListedNote(){
-      //empty
-   }
 
    //methods
    public int getId() {
@@ -89,11 +87,4 @@ public class ListedNote {
       this.lastUpdate = lastUpdate;
    }
 
-   public boolean isSelected() {
-      return selected;
-   }
-
-   public void setSelected(boolean selected) {
-      this.selected = selected;
-   }
 }
