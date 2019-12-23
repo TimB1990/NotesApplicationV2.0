@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
+/** The UpdateNoteActivity class is responsible for the logic to allow users to update a note */
 public class UpdateNoteActivity extends AppCompatActivity{
 
    public static final String EXTRA_REPLY =
@@ -29,6 +30,7 @@ public class UpdateNoteActivity extends AppCompatActivity{
    EditText updateTitle, updateDescription, updateContent;
    private NotesViewModel model;
 
+   /** The onCreate method defines logic when the Activity is created */
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);

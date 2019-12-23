@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import com.example.notesapplicationv20.R;
 import com.example.notesapplicationv20.database.ListedNote;
 import java.text.SimpleDateFormat;
@@ -32,7 +31,9 @@ public class NotesAdapter extends SelectableAdapter<NotesAdapter.ViewHolder>{
    private List<ListedNote> mListedNotes;
 
 
-   /* Initialize context and ViewHolder.ClickListener in constructor */
+   /** Initializes context and ViewHolder.ClickListener in constructor
+    * @param context The given context
+    * @param cl The instance of ViewHolder.ClickListener to be set */
    public NotesAdapter(Context context, ViewHolder.ClickListener cl) {
       super();
       this.cl = cl;
@@ -40,18 +41,29 @@ public class NotesAdapter extends SelectableAdapter<NotesAdapter.ViewHolder>{
       this.mInflater = LayoutInflater.from(context);
    }
 
+   /** The onCreateViewHolder method is called when RecyclerView needs a new RecyclerView.ViewHolder of the given
+    *  type to represent an item. This new ViewHolder should be constructed with a new View that can represent
+    *  the items of the given type. You can either create a new View manually or inflate it from an XML layout file.
+    *  @param parent ViewGroup: The ViewGroup into which the new View will be added after it is bound to an adapter position.
+    *  @param viewType int: The view type of the new View.
+    *  @return A new ViewHolder that holds a View of the given view type */
    @NonNull
    @Override
    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-      /* Create the itemView that will hold the layoutInflater from context
-      *  Take R.layout.note_item(.xml) as single item that holds information about
+      /* Take R.layout.note_item(.xml) as single item that holds information about
       *  the specific note that will be displayed in the viewHolder. attachToRoot is false
       *  because we are not responsible for adding the child view manually (item) */
+
       View itemView = mInflater.inflate(R.layout.note_item, parent, false);
       return new ViewHolder(itemView, cl);
    }
 
+   /** Called by RecyclerView to display the data at the specified position.
+    * This method should update the contents of the itemView to reflect the item at the given position.
+    * @param holder ViewHolder:  The ViewHolder which should be updated to represent the contents of the item at the given position in the data set.
+    * @param position int: The position of the item within the adapter's data set.
+    * */
    @Override
    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
@@ -85,7 +97,7 @@ public class NotesAdapter extends SelectableAdapter<NotesAdapter.ViewHolder>{
 
    /** This method will set the listed notes inside this adapter and will notify
     * the data set being changed
-    * @param newListedNotes A list containing the notes to be listed (ListedNote)
+    * @param newListedNotes List<ListedNotes>: A list containing the notes to be listed (ListedNote)
     * */
    public void setListedNotes(List<ListedNote> newListedNotes) {
       this.mListedNotes = newListedNotes;
@@ -169,11 +181,8 @@ public class NotesAdapter extends SelectableAdapter<NotesAdapter.ViewHolder>{
 
    /** This inner class contains the logic of a listed item inside the RecyclerView
     *  Therefore this class extends RecyclerView.ViewHolder. This class implements
-    *  View.Onclicklistener and View.onLongClickListener so a single item can perform separate operations,
-    *  i.e. being selected on long click and launching the ReadNoteActivity on a single click.
-    *  @extends RecylerView.Viewholder
-    *  @implements View.OnclickListener
-    *  @implements View.OnLongClickListener */
+    *  View.OnClickListener and View.onLongClickListener so a single item can perform separate operations,
+    *  i.e. being selected on long click and launching the ReadNoteActivity on a single click. */
    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
 
       /* Define the view elements for single item */
@@ -230,7 +239,7 @@ public class NotesAdapter extends SelectableAdapter<NotesAdapter.ViewHolder>{
          return true;
       }
 
-      /** This inner interface contains the methods that are implemented by MainActivity */
+      /** This inner interface contains the methods that will be implemented by MainActivity */
       public interface ClickListener{
          void onItemClicked(int position);
          boolean onItemLongClicked(int position);

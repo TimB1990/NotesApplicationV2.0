@@ -7,9 +7,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+/** The SelectableAdapter class is subclassed by notes adapter.
+ *  <VH extends RecyclerView.ViewHolder> means that it is assumed we have
+ *   a class which requires a type to use across its class declaration.
+ *   In this case it needs to be a subtype of RecyclerView.ViewHolder.
+ *   Also this class needs to extend RecyclerView.Adapter, that should be one of the generic type we defined
+ *   (VH) i.e. an RecyclerView.ViewHolder superclass.
+ * @Extends generic type VH that should be some class subclass of RecyclerView.ViewHolder
+ * @Extends RecyclerView.Adapter<VH>
+ *   */
 public abstract class SelectableAdapter<VH extends RecyclerView.ViewHolder> extends RecyclerView.Adapter<VH> {
-   @SuppressWarnings("unused")
-   private static final String TAG = SelectableAdapter.class.getSimpleName();
+
+   /* a SparseBooleanArray of selectedItems. A SpareBooleanArray maps integers to booleans
+   *  Unlike a normal array of booleans there can be gaps in the indices.
+   *  It is intended to be more memory efficient than using a HashMap to map Integers to Booleans
+   *  both because it avoids auto-boxing keys and values and its data structure doesn't rely on
+   *  an extra entry object for each mapping.
+   * */
 
    private SparseBooleanArray selectedItems;
 

@@ -38,6 +38,9 @@ public class SingleNote implements Serializable {
    @ColumnInfo(name="last_update")
    private Date lastUpdate;
 
+   /** This is the first constructor for SingleNote which will be called when a new SingleNote instance is to be created
+    *  and information about its id is required. This constructor will be used to create an updated SingleNote instance
+    *  */
    public SingleNote(int id, String subject, String title, String description, String content, Date createdAt, Date lastUpdate){
       this.id = id;
       this.subject = subject;
@@ -48,6 +51,10 @@ public class SingleNote implements Serializable {
       this.lastUpdate = lastUpdate;
    }
 
+   /** This is the second constructor for SingleNote and does not require an id. This constructor will be
+    * called when a new singleNote instance is to be created and its id needs to be generated.
+    * The @Ignore- annotation prevents the room database to construct an entity without id column.
+    * */
    @Ignore
    public SingleNote(String subject, String title, String description, String content, Date createdAt, Date lastUpdate){
       this.subject = subject;
